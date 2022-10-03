@@ -5,29 +5,47 @@ module Star exposing (main)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, src)
+import Html.Events exposing (onClick)
 
 --stores all images in baseUrl
 baseUrl : String
 baseUrl = 
     "images/"
 
-initialModel : { url : String, caption : String}
+type Msg =
+    Like | Unlike
+
+initialModel : { url : String, caption : String, liked : Bool}
 initialModel = 
     {
         url = baseUrl ++ "star.jpg"
         ,caption = "Stars"
+        ,liked = False
     }
 
-viewPhoto : { url : String, caption : String } -> Html msg
+viewPhoto : { url : String, caption : String, liked : Bool} -> Html Msg
 viewPhoto model =
+    let
+        buttonType =
+            if model.liked then "star" else "star_half"
+        msg =
+            if model.liked then Unlike else Like   
+    in
+
     div [ class "detailed-photo" ]
             [
                 img [ src model.url ] []
                 ,div [ class "photo-info" ]
-                [ h2 [ class "caption" ] [ text model.caption ] ]
+                [ div [ class "star-button" ]
+                    [ span
+                        [ class "material-icons md-48", onClick msg] 
+                        [ text buttonType ]
+                    ]
+                ]
+                ,h2 [ class "caption" ] [ text model.caption ] 
             ]
 
-view : { url : String, caption : String} -> Html msg
+view : { url : String, caption : String, liked : Bool } -> Html Msg
 view model = 
     div []
     [
@@ -39,6 +57,6 @@ view model =
         ]
     ]
 
-main : Html msg
+main : Html Msg
 main = 
     view initialModel
