@@ -1,25 +1,44 @@
+--MVU Architecture (Elm Architecture)
+--Model, View, Update
+--Model /state
 module Star exposing (main)
 
 import Html exposing (..)
 import Html.Attributes exposing (class, src)
 
-viewPhoto : String -> String -> Html msg
-viewPhoto url caption =
+--stores all images in baseUrl
+baseUrl : String
+baseUrl = 
+    "images/"
+
+initialModel : { url : String, caption : String}
+initialModel = 
+    {
+        url = baseUrl ++ "star.jpg"
+        ,caption = "Stars"
+    }
+
+viewPhoto : { url : String, caption : String } -> Html msg
+viewPhoto model =
     div [ class "detailed-photo" ]
             [
-                img [ src url ] []
+                img [ src model.url ] []
                 ,div [ class "photo-info" ]
-                [ h2 [ class "caption" ] [ text caption ] ]
+                [ h2 [ class "caption" ] [ text model.caption ] ]
             ]
 
-main : Html msg 
-main = 
+view : { url : String, caption : String} -> Html msg
+view model = 
     div []
     [
         div [ class "header" ]
         [ h1 [] [ text "Star" ] ]
         ,div [ class "content-flow" ]
         [
-            viewPhoto "star.jpg" "Stars"
+            viewPhoto model
         ]
     ]
+
+main : Html msg
+main = 
+    view initialModel
