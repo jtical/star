@@ -1,9 +1,21 @@
 module Star exposing (main)
 
-import Html exposing (h1, Html, div, text)
-import Html.Attributes exposing (class)
+import Html exposing (..)
+import Html.Attributes exposing (class, src)
 
 main : Html msg 
 main = 
-    div [ class "header"] 
-        [ h1 [] [ text "Star"]]
+    div []
+    [
+        div [ class "header" ]
+        [ h1 [] [ text "Star" ] ]
+        ,div [ class "content-flow" ]
+        [
+            div [ class "detailed-photo" ]
+            [
+                img [ src "star.jpg" ] []
+                ,div [ class "photo-info" ]
+                [ h2 [ class "caption" ] [ text "Star" ] ]
+            ]
+        ]
+    ]
